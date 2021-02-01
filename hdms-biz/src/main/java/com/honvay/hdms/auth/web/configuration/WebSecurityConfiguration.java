@@ -34,6 +34,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Order(99)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	private final static int MAX_LOGIN_NUM = 1 ; // 允许最多同一账号登录人数 TODO 此参数未生效，需要再调试
+
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
@@ -69,7 +71,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/asset/**");
+		web.ignoring().antMatchers("/asset/**").antMatchers("/file/**");
 	}
 
 	@Override
@@ -77,7 +79,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		captchaAuthenticationFilter.addRequestMatcher(new AntPathRequestMatcher("/login", HttpMethod.POST.name()), this.failureHandler);
 
 		http.setSharedObject(CaptchaAuthenticationFilter.class, captchaAuthenticationFilter);
-
+        http.headers().frameOptions().disable(); //解决 X-Frame-Options 问题
 		http.authorizeRequests()
 				.antMatchers("/login", "/logout", "/error", "/fs/stream").permitAll()
 				.antMatchers("/captcha", "/session-invalid").permitAll()
@@ -97,7 +99,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.addFilterBefore(captchaAuthenticationFilter, AbstractPreAuthenticatedProcessingFilter.class)
 				.sessionManagement()
 				.invalidSessionUrl("/session-invalid")
-				.maximumSessions(1)
+				.maximumSessions(MAX_LOGIN_NUM)
 				.expiredUrl("/session-invalid")
 				.sessionRegistry(sessionRegistry)
 				.and()
@@ -115,5 +117,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.userDetailsService(userDetailsService)
 				.passwordEncoder(passwordEncoder());
 	}
+
 
 }

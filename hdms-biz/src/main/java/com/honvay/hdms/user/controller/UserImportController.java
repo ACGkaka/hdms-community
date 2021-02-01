@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -156,8 +154,9 @@ public class UserImportController extends BaseController {
 		}
 		String fileName = String.valueOf(System.currentTimeMillis());
 		File file = new File(System.getProperty("java.io.tmpdir"), fileName);
-		workbook.write(file);
-		workbook.close();
+		FileOutputStream fileOutputStream = new FileOutputStream(file,true);
+		workbook.write(fileOutputStream);
+		// workbook.close();
 		Map<String, Object> result = new HashMap<>(4);
 		result.put("total", rows);
 		result.put("success", successCount);

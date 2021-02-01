@@ -77,13 +77,13 @@ public class FileExtractor {
 		if (name.endsWith(".doc")) {
 			WordExtractor extractor = new WordExtractor(input);
 			String content = extractor.getText();
-			extractor.close();
+			//extractor.close();
 			return content;
 		} else {
 			XWPFDocument doc = new XWPFDocument(input);
 			XWPFWordExtractor extractor = new XWPFWordExtractor(doc);
 			String content = extractor.getText();
-			extractor.close();
+			//extractor.close();
 			return content;
 		}
 
@@ -94,13 +94,13 @@ public class FileExtractor {
 			HSSFWorkbook workbook = new HSSFWorkbook(input);
 			ExcelExtractor extractor = new ExcelExtractor(workbook);
 			String content = extractor.getText();
-			extractor.close();
+			//extractor.close();
 			return content;
 		} else {
 			XSSFWorkbook workbook = new XSSFWorkbook(input);
 			XSSFExcelExtractor extractor = new XSSFExcelExtractor(workbook);
 			String content = extractor.getText();
-			extractor.close();
+			//extractor.close();
 			return content;
 		}
 	}
@@ -109,13 +109,13 @@ public class FileExtractor {
 		if (name.endsWith(".ppt")) {
 			PowerPointExtractor extractor = new PowerPointExtractor(input);
 			String content = extractor.getText();
-			extractor.close();
+			//extractor.close();
 			return content;
 		} else {
 			XMLSlideShow doc = new XMLSlideShow(input);
 			XSLFPowerPointExtractor extractor = new XSLFPowerPointExtractor(doc);
 			String content = extractor.getText();
-			extractor.close();
+			//extractor.close();
 			return content;
 		}
 

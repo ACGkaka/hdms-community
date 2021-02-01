@@ -27,7 +27,9 @@ public class DefaultUploader implements Uploader {
 
 	@Override
 	public String upload(UploadRequest request, MultipartFile multipartFile, Consumer<String> consumer) throws IOException {
-		String key = UUID.randomUUID().toString().replaceAll("-", "");
+		String originalFileName = multipartFile.getOriginalFilename();
+		String suffix = originalFileName.substring(originalFileName.lastIndexOf("."));
+		String key = UUID.randomUUID().toString().replaceAll("-", "")+suffix;
 		storage.store("file", key, encryptors.encrypt(multipartFile.getInputStream()), consumer);
 		return key;
 	}

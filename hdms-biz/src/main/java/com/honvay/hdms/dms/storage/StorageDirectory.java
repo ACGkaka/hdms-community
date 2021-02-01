@@ -9,5 +9,6 @@ public class StorageDirectory {
 	public static final String FILE = "file";
 
 	public static final String PREVIEW = "preview/";
+
 	public static final String AVATAR = "avatar";
 }

@@ -51,7 +51,8 @@ public class IndexController {
 	public Result<Environment> get(@AuthenticationPrincipal AuthenticatedUser authenticatedUser) {
 		UserSpace userSpace = new UserSpace();
 		userSpace.setUsed(documentReadService.getUsedSpace(authenticatedUser.getId()));
-		userSpace.setQuota(DataSize.ofGigabytes(authenticatedUser.getQuota()).toBytes());
+		// TODO tmp
+		// userSpace.setQuota(DataSize.ofGigabytes(authenticatedUser.getQuota()).toBytes());
 
 		Environment environment = new Environment();
 		environment.setUser(authenticatedUser);
