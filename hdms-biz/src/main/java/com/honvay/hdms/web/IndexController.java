@@ -59,8 +59,8 @@ public class IndexController {
 		environment.setPermissions(permissionService.list());
 		environment.setNotice(noticeService.getAvailable());
 		Map<String, Mount> mounts = new HashMap<>(2);
-//		mounts.put(authenticatedUser.getUserMount().getAlias(), authenticatedUser.getUserMount());
-//		mounts.put(authenticatedUser.getOrganizationMount().getAlias(), authenticatedUser.getOrganizationMount());
+		mounts.put(authenticatedUser.getUserMount().getAlias(), authenticatedUser.getUserMount());
+		mounts.put(authenticatedUser.getOrganizationMount().getAlias(), authenticatedUser.getOrganizationMount());
 		environment.setMounts(mounts);
 
 		AppSetting appSetting = new AppSetting();
